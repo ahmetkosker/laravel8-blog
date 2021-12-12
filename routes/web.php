@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Testt;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminLoginController;
 
 /*
@@ -21,16 +22,36 @@ Route::get('/', function () {
     return view('MainPage');
 });
 
-Route::get('/login/admin', function (Request $request) {
-    return view('test.test');
+Route::middleware('auth')->prefix('admin')->group(function () {
 });
 
-Route::post('/login/admin', [AdminLoginController::class, 'login']);
+Route::get('test', function () {
+    return view('profile.et');
+});
 
-Route::get('/aPanel', function (Request $request) {
-    $user = $request->session()->get('user_id');
-    return view('test.test_login', ['user' => $user]);
-})->middleware('auth');
+Route::middleware('auth')->prefix('admin')->group(function () {
+
+    Route::get('/login', function (Request $request) {
+        return view('auth.admin_login');
+    })->name('admin_login');
+
+    Route::post('/login', [AdminLoginController::class, 'login'])->name('ahmetbaba');
+
+    Route::get('/panel', function (Request $request) {
+        $user = $request->session()->get('user_id');
+        return view('profile.admin_panel', ['user' => $user]);
+    })->name('admin_panel');
+
+    Route::get('/categories', [CategoryController::class, 'show'])->name('admin_panel_categories');
+
+    Route::get('/category/add', [CategoryController::class, 'show_adding'])->name('adding category get');
+
+    Route::post('/category/add', [CategoryController::class, 'adding_category'])->name('adding category post');
+});
+
+
+
+
 
 Route::get('/delete', function (Request $request) {
     $request->session()->flush();

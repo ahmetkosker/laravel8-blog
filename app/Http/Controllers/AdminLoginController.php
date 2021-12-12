@@ -12,15 +12,16 @@ class AdminLoginController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        $results = DB::select('select * from admins where email = ?', [$email]);
-        if ($results && $results[0]->password == $password) {
-            $request->session()->put('user_id', $email);
-            return redirect('/aPanel');
-        }
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-        abort(404);
+        $results = DB::select('select * from admins where email = ?', [$email]);
+        if ($results && $results[0]->password == $password) {
+            $request->session()->put('user_id', $email);
+            return redirect('/admin/panel');
+        } else {
+            return redirect('/admin/login');
+        }
     }
 }
