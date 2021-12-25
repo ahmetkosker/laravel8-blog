@@ -49,11 +49,6 @@ class CategoryController extends Controller
     {
         $user = $request->session()->get('user_id');
         $categories = DB::select('select * from categories');
-        // $category = DB::table('categories')->insert([
-        //     'parent_id' => 0,
-        //     'title' => 'Hayvanlar',
-        //     'status' => 'False'
-        // ]);
         return view('profile.admin_categories', ['user' => $user, 'categories' => $categories]);
     }
 
@@ -63,9 +58,26 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+
+    public function showing_edit(Request $request, Category $category, $id)
     {
-        //
+        $user = $request->session()->get('user_id');
+        $data = DB::select('select * from categories where parent_id = ?', [0]);
+        $category = DB::select('select * from categories where id = ?', [$id]);
+        return view('profile.category_edit', ['user' => $user, 'data' => $data, 'category' => $category]);
+    }
+
+    public function edit(Request $request, Category $category, $id)
+    {
+        $parent_id = request()->input('parent');
+        $title = request()->input('title');
+        $keywords = request()->input('keywords');
+        $description = request()->input('description');
+        $slug = request()->input('slug');
+        $update = DB::table('categories')
+            ->where('id', $id)
+            ->update(['parent_id' => $parent_id, 'title' => $title, 'keywords' => $keywords, 'description' => $description, 'slug' => $slug]);
+        return redirect('/admin/categories');
     }
 
     public function show_adding(Request $request, Category $category)
@@ -91,7 +103,7 @@ class CategoryController extends Controller
             'slug' => $slug,
             'status' => $status
         ]);
-        return 'added';
+        return redirect('/admin/categories');
     }
 
     /**
@@ -112,8 +124,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category, $id)
     {
-        //
+        DB::table('categories')->where('id', $id)->delete();
+        DB::table('categories')->where('parent_id', $id)->delete();
+        return redirect('/admin/categories');
     }
 }

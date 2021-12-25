@@ -1,10 +1,8 @@
 @extends('profile.admin_main')
 
-@section('title', 'Categories')
+@section('title', 'Blogs')
 
 @section('main')
-
-
 
 <div class="dashboard-wrapper">
     <div class="container-fluid  dashboard-content">
@@ -37,31 +35,31 @@
             <!-- ============================================================== -->
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card">
-                    <h5 class="card-header">Categories</h5>
-                    <a href="/admin/category/add" class='btn btn-primary' style='color:aliceblue;'>Add a new category</a>
+                    <h5 class="card-header">Blogs</h5>
+                    <a href="/admin/blog/add" class='btn btn-primary' style='color:aliceblue;'>Add a new blog</a>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered first">
-                                @if(isset($categories))
+                                @if(isset($data))
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Parent</th>
+                                        <th>Category</th>
                                         <th>Title</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
-                                @foreach ($categories as $category)
+                                @foreach ($data as $blog)
                                 <tbody>
                                     <tr>
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ $category->parent_id }}</td>
-                                        <td>{{ $category->title }}</td>
-                                        <td>{{ $category->status }}</td>
-                                        <td><a href="{{ url('/admin/category/edit/'.$category->id) }}" class='btn btn-primary'>Edit</a></td>
-                                        <form action="{{ route('destroying a category', $category->id) }}" method="POST">
+                                        <td>{{ $blog->id }}</td>
+                                        <td>{{ $blog->parent_id }}</td>
+                                        <td>{{ $blog->title }}</td>
+                                        <td>{{ $blog->status }}</td>
+                                        <td><a href="" class='btn btn-primary'>Edit</a></td>
+                                        <form action="" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <td><input type='submit' class='btn btn-danger' value='Delete'></td>
@@ -138,3 +136,9 @@
 
 
 @endsection
+<!-- </textarea id="summernote" class='form-group'></textarea>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+</script> -->

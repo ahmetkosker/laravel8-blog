@@ -1,9 +1,8 @@
 @extends('profile.admin_main')
 
-@section('title', 'aho')
+@section('title', 'Edit category')
 
 @section('main')
-
 
 
 <div class="dashboard-wrapper">
@@ -18,7 +17,6 @@
                         <div class="page-header" id="top">
                             <h2 class="pageheader-title">Form Elements </h2>
                             <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
-
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -62,10 +60,10 @@
                             <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                         </div>
                         <div class="card">
-
                             <h5 class="card-header">Basic Form</h5>
                             <div class="card-body">
-                                <form action="{{ route('adding category post') }}" method='POST'>
+                                <form action="" method='POST'>
+                                    @method('PUT')
                                     @csrf
                                     <div class="form-group">
                                         <label for="input-select">Parent</label>
@@ -81,21 +79,22 @@
                                     </div>
                                     <div>
                                     </div>
+                                    @foreach($category as $category)
                                     <div class="form-group">
                                         <label for="title" class="col-form-label">Title</label>
-                                        <input id="title" type="text" name="title" class="form-control">
+                                        <input id="title" type="text" name="title" value="{{ $category->title }}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="keywords" class="col-form-label">Keywords</label>
-                                        <input id="keywords" type="text" name="keywords" class="form-control">
+                                        <input id="keywords" type="text" name="keywords" value="{{ $category->keywords }}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="col-form-label">Description</label>
-                                        <input id="description" type="text" name="description" class="form-control">
+                                        <input id="description" type="text" name="description" value="{{ $category->description }}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="slug" class="col-form-label">Slug</label>
-                                        <input id="slug" type="text" name="slug" class="form-control">
+                                        <input id="slug" type="text" name="slug" value="{{ $category->slug }}" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="input-select">Status</label>
@@ -104,6 +103,7 @@
                                             <option value="false" selected>False</option>
                                         </select>
                                     </div>
+                                    @endforeach
                                     <div class="form-group">
                                         <input id="submit" type="submit" class="form-control btn-facebook" value='Submit'>
                                     </div>
@@ -180,6 +180,5 @@
 <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-
 
 @endsection

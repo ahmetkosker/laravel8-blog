@@ -1,6 +1,6 @@
 @extends('profile.admin_main')
 
-@section('title', 'aho')
+@section('title', 'Adding Blog')
 
 @section('main')
 
@@ -62,15 +62,35 @@
                             <p>Use custom button styles for actions in forms, dialogs, and more with support for multiple sizes, states, and more.</p>
                         </div>
                         <div class="card">
-
                             <h5 class="card-header">Basic Form</h5>
-                            <div class="card-body">
-                                <form action="{{ route('adding category post') }}" method='POST'>
+                            <!-- <select id='file' name='file' class="form-control" id="input-select">
+                                <option value='0'>Writing</option>
+                                <option value='1'>PDF</option>
+                                <option value='2'>Image</option>
+                            </select>
+                            <script>
+                                document.getElementById('file').addEventListener('change', function() {
+                                    if (this.value == 0) {
+                                        document.getElementById('writing').style.display = "block";
+                                        document.getElementById('pdf').style.display = "none";
+                                        document.getElementById('image').style.display = "none";
+                                    } else if (this.value == 1) {
+                                        document.getElementById('writing').style.display = "none";
+                                        document.getElementById('pdf').style.display = "block";
+                                        document.getElementById('image').style.display = "none";
+                                    } else {
+                                        document.getElementById('writing').style.display = "none";
+                                        document.getElementById('pdf').style.display = "none";
+                                        document.getElementById('image').style.display = "block";
+                                    }
+                                });
+                            </script> -->
+                            <div id="writing" style='display:block;' class="card-body ">
+                                <form action="/admin/blog/add" method='POST'>
                                     @csrf
                                     <div class="form-group">
-                                        <label for="input-select">Parent</label>
-                                        <select name='parent' class="form-control" id="input-select">
-                                            <option value='0'>Main Category</option>
+                                        <label for="input-select">Category</label>
+                                        <select name='category_id' class="form-control" id="input-select">
                                             @if(isset($data))
                                             @foreach ($data as $data)
                                             <option value={{ $data->id  }}>{{ $data->title  }}</option>
@@ -90,12 +110,13 @@
                                         <input id="keywords" type="text" name="keywords" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="description" class="col-form-label">Description</label>
-                                        <input id="description" type="text" name="description" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="slug" class="col-form-label">Slug</label>
-                                        <input id="slug" type="text" name="slug" class="form-control">
+                                        <label for="summernote">Description</label>
+                                        <textarea id="summernote" name="description" class='form-group'>asdfasdf</textarea>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#summernote').summernote();
+                                            });
+                                        </script>
                                     </div>
                                     <div class="form-group">
                                         <label for="input-select">Status</label>
@@ -109,10 +130,31 @@
                                     </div>
                                 </form>
                             </div>
+                            <!-- <div id="pdf" style='display:none;' class=" card-body">
+                                <form action="/admin/blog/add" method='POST'>
+                                    @csrf
+                                    <div class="form-group">
+                                        <input id="file" type="file" class="form-control btn-facebook" value='Submit'>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="submit" type="submit" class="form-control btn-facebook" value='Submit'>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="image" style='display:none;' class="card-body">
+                                <form action="/admin/blog/add" method='POST'>
+                                    @csrf
+                                    <div class="form-group">
+                                        <input id="file" type="file" class="form-control btn-facebook" value='Submit'>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="submit" type="submit" class="form-control btn-facebook" value='Submit'>
+                                    </div>
+                                </form>
+                            </div> -->
                         </div>
                     </div>
                 </div>
-
             </div>
             <!-- ============================================================== -->
             <!-- sidenavbar -->

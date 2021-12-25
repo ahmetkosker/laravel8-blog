@@ -6,6 +6,7 @@ use App\Http\Controllers\Testt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,20 +23,18 @@ Route::get('/', function () {
     return view('MainPage');
 });
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::get('/test', function (Request $request) {
 });
 
-Route::get('test', function () {
-    return view('profile.et');
-});
+Route::get('/admin/login', function (Request $request) {
+    return view('auth.admin_login');
+})->name('admin_login');
+
+Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('ahmetbaba');
+
+Route::get('/blogs', [BlogController::class, 'show']);
 
 Route::middleware('auth')->prefix('admin')->group(function () {
-
-    Route::get('/login', function (Request $request) {
-        return view('auth.admin_login');
-    })->name('admin_login');
-
-    Route::post('/login', [AdminLoginController::class, 'login'])->name('ahmetbaba');
 
     Route::get('/panel', function (Request $request) {
         $user = $request->session()->get('user_id');
@@ -47,10 +46,25 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/category/add', [CategoryController::class, 'show_adding'])->name('adding category get');
 
     Route::post('/category/add', [CategoryController::class, 'adding_category'])->name('adding category post');
+
+    Route::get('/category/edit/{id}', [CategoryController::class, 'showing_edit'])->name('category edit get');
+
+    Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category edit post');
+
+    Route::delete('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('destroying a category');
+
+
+    Route::prefix('blog')->group(function () {
+
+        Route::get('/', [BlogController::class, 'index']);
+        Route::get('/add', [BlogController::class, 'show']);
+        Route::post('/add', [BlogController::class, 'create']);
+        Route::get('/edit/{id}', [BlogController::class, 'edit']);
+        Route::put('/edit/{id}', [BlogController::class, 'update']);
+        // Route::get('/', [BlogController::class], '');
+
+    });
 });
-
-
-
 
 
 Route::get('/delete', function (Request $request) {
