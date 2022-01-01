@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\blogs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -27,6 +28,12 @@ class BlogController extends Controller
      */
     public function create(Request $request)
     {
+        $validation = $request->validate([
+            'category_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
         $category_id = $request->input('category_id');
         $title = $request->input('title');
         $keywords = $request->input('keywords');
@@ -39,7 +46,8 @@ class BlogController extends Controller
             'keywords' => $keywords,
             'description' => $description,
             'slug' => $slug,
-            'status' => $status
+            'status' => $status,
+            'image' => Storage::putfile('images', $request->file('image'))
         ]);
         return redirect('/admin/blog');
     }
@@ -89,9 +97,31 @@ class BlogController extends Controller
      * @param  \App\Models\blogs  $blogs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, blogs $blogs)
+    public function update(Request $request, blogs $blogs, $id)
     {
-        //
+        $category_id = $request->input('category_id');
+        $title = $request->input('title');
+        $keywords = $request->input('keywords');
+        $description = $request->input('description');
+        $slug = $request->input('slug');
+        $status = $request->input('status');
+        if ($request->file('image')) {
+            $image = Storage::putfile('images', $request->file('image'));
+        } else {
+            $image = '';
+        }
+        $update = DB::table('blogs')
+            ->where('id', $id)
+            ->update([
+                'category_id' => $category_id,
+                'title' => $title,
+                'keywords' => $keywords,
+                'description' => $description,
+                'slug' => $slug,
+                'status' => $status,
+                'image' => $image
+            ]);
+        return redirect('/admin/blog');
     }
 
     /**
@@ -100,8 +130,9 @@ class BlogController extends Controller
      * @param  \App\Models\blogs  $blogs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(blogs $blogs)
+    public function destroy(blogs $blogs, $id)
     {
-        //
+        DB::table('blogs')->where('id', $id)->delete();
+        return redirect('/admin/blog');
     }
 }

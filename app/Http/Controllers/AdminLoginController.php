@@ -10,18 +10,17 @@ class AdminLoginController extends Controller
 {
     public function login(Request $request)
     {
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
-        $results = DB::select('select * from admins where email = ?', [$email]);
-        if ($results && $results[0]->password == $password) {
-            $request->session()->put('user_id', $email);
-            return redirect('/admin/panel');
-        } else {
-            return redirect('/admin/login');
+        
+        if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->intended('/admin/panel');
         }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 }

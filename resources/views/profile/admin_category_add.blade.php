@@ -103,7 +103,16 @@
                                             <option value="true">True</option>
                                             <option value="false" selected>False</option>
                                         </select>
+                                    </div>          
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
                                     </div>
+                                    @endif
                                     <div class="form-group">
                                         <input id="submit" type="submit" class="form-control btn-facebook" value='Submit'>
                                     </div>

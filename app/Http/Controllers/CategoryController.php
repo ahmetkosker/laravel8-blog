@@ -69,6 +69,11 @@ class CategoryController extends Controller
 
     public function edit(Request $request, Category $category, $id)
     {
+        $validation = $request->validate([
+            'title' => 'required',
+            'parent' => 'required',
+        ]);
+        
         $parent_id = request()->input('parent');
         $title = request()->input('title');
         $keywords = request()->input('keywords');
@@ -89,6 +94,11 @@ class CategoryController extends Controller
 
     public function adding_category(Request $request, Category $category)
     {
+        $validation = $request->validate([
+            'title' => 'required',
+            'parent' => 'required',
+        ]);
+        
         $parent = $request->input('parent');
         $title = $request->input('title');
         $keywords = $request->input('keywords');

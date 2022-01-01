@@ -43,40 +43,50 @@
                                 @if(isset($data))
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Category</th>
-                                        <th>Title</th>
-                                        <th>Status</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th style='text-align:center;'>ID</th>
+                                        <th style='text-align:center;'>Category</th>
+                                        <th style='text-align:center;'>Title</th>
+                                        <th style='text-align:center;'>Status</th>
+                                        <th style='text-align:center;'>Image</th>
+                                        <th style='text-align:center;'>Image Gallery</th>
+                                        <th style='text-align:center;'>Edit</th>
+                                        <th style='text-align:center;'>Delete</th>
                                     </tr>
                                 </thead>
                                 @foreach ($data as $blog)
                                 <tbody>
                                     <tr>
-                                        <td>{{ $blog->id }}</td>
-                                        <td>{{ $blog->parent_id }}</td>
-                                        <td>{{ $blog->title }}</td>
-                                        <td>{{ $blog->status }}</td>
-                                        <td><a href="" class='btn btn-primary'>Edit</a></td>
-                                        <form action="" method="POST">
+                                        <td style=' text-align:center;'>{{ $blog->id }}</td>
+                                        <td style=' text-align:center;'>{{ $blog->parent_id }}</td>
+                                        <td style=' text-align:center;'>{{ $blog->title }}</td>
+                                        <td style=' text-align:center;'>{{ $blog->status }}</td>
+                                        <td>
+                                            <img style="display: block; margin: auto;" src=" {{ Storage::url($blog->image) }}" height='80' weight='80' alt="">
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('/admin/image/add', $blog->id) }}"> <img style="display: block; margin: auto;" src="{{asset('assets/images')}}/gallery.png" height='60' weight='60' alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div style=' text-align:center;'>
+                                                <a href="{{ url('/admin/blog/edit/'.$blog->id) }}" class='text-primary' style='border:none; font-size:45px;'><i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <form action="{{ route('destroying a blog', $blog->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <td><input type='submit' class='btn btn-danger' value='Delete'></td>
+                                            <td>
+                                                <div style=' text-align:center;'>
+                                                    <button type='submit' style='border:none; color:red; font-size:45px;'>
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </form>
                                     </tr>
                                 </tbody>
                                 @endforeach
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
                                 @else
                                 <h2><b>There are no categories</b></h2>
                                 @endif

@@ -62,7 +62,7 @@
                         <div class="card">
                             <h5 class="card-header">Basic Form</h5>
                             <div class="card-body">
-                                <form action="" method='POST'>
+                            <form action="" method='POST' enctype='multipart/form-data'>
                                     @method('PUT')
                                     @csrf
                                     <div class="form-group">
@@ -107,6 +107,10 @@
                                             <option value="true">True</option>
                                             <option value="false" selected>False</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image" class="col-form-label">Image</label>
+                                        <input id="image" type="file" name="image" class="form-control">
                                     </div>
                                     @endforeach
                                     <div class="form-group">
