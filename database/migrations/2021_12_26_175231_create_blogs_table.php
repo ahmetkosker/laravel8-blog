@@ -28,7 +28,8 @@ class CreateBlogsTable extends Migration
             $table->string('file');
             $table->string('slug', 100)->nullable();
             $table->string('status', 5)->nullable();
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

@@ -4,6 +4,9 @@
 
 @section('main')
 
+@php
+@endphp
+
 <div class="dashboard-wrapper">
     <div class="container-fluid  dashboard-content">
         <!-- ============================================================== -->
@@ -57,14 +60,14 @@
                                 <tbody>
                                     <tr>
                                         <td style=' text-align:center;'>{{ $blog->id }}</td>
-                                        <td style=' text-align:center;'>{{ $blog->parent_id }}</td>
+                                        <td style=' text-align:center;'></td>
                                         <td style=' text-align:center;'>{{ $blog->title }}</td>
                                         <td style=' text-align:center;'>{{ $blog->status }}</td>
                                         <td>
                                             <img style="display: block; margin: auto;" src=" {{ Storage::url($blog->image) }}" height='80' weight='80' alt="">
                                         </td>
                                         <td>
-                                            <a href="{{ url('/admin/image/add', $blog->id) }}"> <img style="display: block; margin: auto;" src="{{asset('assets/images')}}/gallery.png" height='60' weight='60' alt="">
+                                            <a href="{{ url('/admin/image/add', $blog->id) }}" onclick="return !window.open(this.href, '', 'top=50 left=100 width=1100, height=700')"> <img style="display: block; margin: auto;" src="{{asset('assets/images')}}/gallery.png" height='60' weight='60' alt="">
                                             </a>
                                         </td>
                                         <td>

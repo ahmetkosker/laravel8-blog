@@ -9,8 +9,22 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function blogs(){
+    protected $appends = [
+        'parent',
+    ];
+
+    public function blogs()
+    {
         return $this->hasMany(blogs::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 }

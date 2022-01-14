@@ -36,7 +36,9 @@
                                             <option value='0'>Main Category</option>
                                             @if(isset($data))
                                             @foreach ($data as $data)
-                                            <option value={{ $data->id  }}>{{ $data->title  }}</option>
+                                            <option value="{{ $data->id }}">
+                                                {{ \App\Http\Controllers\CategoryController::getParentsTree($data, $data->title) }}
+                                            </option>
                                             @endforeach
                                             @else
                                             @endif
@@ -65,7 +67,7 @@
                                         <label for="input-select">Status</label>
                                         <select name='status' class="form-control" id="status">
                                             <option value="true">True</option>
-                                            <option value="false" selected>False</option>
+                                            <option value="false">False</option>
                                         </select>
                                     </div>
                                     @endforeach

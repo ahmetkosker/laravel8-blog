@@ -5,10 +5,12 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Testt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ImageGalleryController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +23,19 @@ use App\Http\Controllers\ImageGalleryController;
 |
 */
 
-Route::get('/', function () {
-    return view('MainPage');
+Route::get('/test', function (Request $request) {
+    return $request->ip();
 });
 
-Route::get('/test', function (Request $request) {
-});
+Route::get('/', [HomeController::class, 'mainPage'])->name('home');
+Route::get('/myaccount', [HomeController::class, 'myaccount'])->name('myaccount');
+Route::get('/aboutus', [HomeController::class, 'aboutus'])->name('aboutus');
+Route::get('/references', [HomeController::class, 'references'])->name('references');
+Route::get('/fag', [HomeController::class, 'fag'])->name('fag');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('/contactForm', [HomeController::class, 'contactForm'])->name('contact form');
+
+
 
 Route::get('/admin/login', function (Request $request) {
     return view('auth.admin_login');
@@ -35,6 +44,8 @@ Route::get('/admin/login', function (Request $request) {
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('ahmetbaba');
 
 Route::get('/blogs', [BlogController::class, 'show']);
+
+
 
 Route::middleware('auth')->prefix('admin')->group(function () {
 
@@ -50,6 +61,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category edit post');
     Route::delete('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('destroying a category');
 
+    Route::prefix('message')->group(function () {
+
+        Route::get('/', [MessageController::class, 'index'])->name('admin_message');
+        Route::get('/edit/{id}', [MessageController::class, 'edit'])->name('admin_message_edit');
+        Route::post('/update/{id}', [MessageController::class, 'update'])->name('admin_message_update');
+        Route::get('/delete/{id}', [MessageController::class, 'destroy'])->name('admin_message_delete');
+        Route::get('/show', [MessageController::class, 'show'])->name('admin_message_show');
+    });
 
     Route::prefix('blog')->group(function () {
 
@@ -76,7 +95,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::get('/setting', [SettingController::class, 'index'])->name('showing setting');
     Route::put('/setting', [SettingController::class, 'update'])->name('updating setting');
-
 });
 
 

@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+
+    protected $appends = [
+        'getParentsTree'
+    ];
+
+    public static function getParentsTree($category, $title)
+    {
+        if ($category->parent_id == 0) {
+            return $title;
+        }
+        $parent = Category::find($category->parent_id);
+        $title = $parent->title . ' > ' . $title;
+
+        return CategoryController::getParentsTree($parent, $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +63,7 @@ class CategoryController extends Controller
     public function show(Request $request, Category $category)
     {
         $user = $request->session()->get('user_id');
-        $categories = DB::select('select * from categories');
+        $categories = Category::with('children')->get();
         return view('profile.admin_categories', ['user' => $user, 'categories' => $categories]);
     }
 
@@ -62,7 +77,7 @@ class CategoryController extends Controller
     public function showing_edit(Request $request, Category $category, $id)
     {
         $user = $request->session()->get('user_id');
-        $data = DB::select('select * from categories where parent_id = ?', [0]);
+        $data = DB::select('select * from categories');
         $category = DB::select('select * from categories where id = ?', [$id]);
         return view('profile.category_edit', ['user' => $user, 'data' => $data, 'category' => $category]);
     }
@@ -73,22 +88,23 @@ class CategoryController extends Controller
             'title' => 'required',
             'parent' => 'required',
         ]);
-        
+
         $parent_id = request()->input('parent');
         $title = request()->input('title');
         $keywords = request()->input('keywords');
         $description = request()->input('description');
         $slug = request()->input('slug');
+        $status = request()->input('status');
         $update = DB::table('categories')
             ->where('id', $id)
-            ->update(['parent_id' => $parent_id, 'title' => $title, 'keywords' => $keywords, 'description' => $description, 'slug' => $slug]);
+            ->update(['parent_id' => $parent_id, 'title' => $title, 'keywords' => $keywords, 'description' => $description, 'slug' => $slug, 'status' => $status]);
         return redirect('/admin/categories');
     }
 
     public function show_adding(Request $request, Category $category)
     {
         $user = $request->session()->get('user_id');
-        $data = DB::select('select * from categories where parent_id = ?', [0]);
+        $data = DB::select('select * from categories');
         return view('profile.admin_category_add', ['user' => $user, 'data' => $data]);
     }
 
@@ -98,7 +114,7 @@ class CategoryController extends Controller
             'title' => 'required',
             'parent' => 'required',
         ]);
-        
+
         $parent = $request->input('parent');
         $title = $request->input('title');
         $keywords = $request->input('keywords');

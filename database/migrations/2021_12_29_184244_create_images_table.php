@@ -18,7 +18,8 @@ class CreateImagesTable extends Migration
             $table->integer('blog_id')->nullable;
             $table->string('title', 150);
             $table->string('image');
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

@@ -22,7 +22,8 @@ class CreateCategoriesTable extends Migration
             $table->string('image', 75)->nullable();
             $table->string('slug', 100)->nullable();
             $table->string('status', 5)->nullable();
-            $table->timestamps();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

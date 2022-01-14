@@ -73,7 +73,7 @@
                                             <option value='0'>Main Category</option>
                                             @if(isset($data))
                                             @foreach ($data as $data)
-                                            <option value={{ $data->id  }}>{{ $data->title  }}</option>
+                                            <option value={{ $data->id  }}>{{ \App\Http\Controllers\CategoryController::getParentsTree($data, $data->title) }}</option>
                                             @endforeach
                                             @else
                                             @endif
