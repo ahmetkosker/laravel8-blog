@@ -28,7 +28,7 @@ $setting = \App\Http\Controllers\HomeController::getSetting()
                     <img src="img/service_2.png" alt="">
                 </div>
                 <div class="text">
-                    <p>{!! $setting->aboutus !!}</p>
+                @if(isset($setting->aboutus))<p>{!! $setting->aboutus !!}</p>@endif
                 </div>
             </div>
         </div>

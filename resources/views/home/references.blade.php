@@ -27,7 +27,7 @@ $setting = \App\Http\Controllers\HomeController::getSetting()
                     <img src="img/service_2.png" alt="">
                 </div>
                 <div class="text">
-                    <p>{!! $setting->references !!}</p>
+                    @if(isset($setting->references)) <p>{!! $setting->references !!}</p>@endif
                 </div>
             </div>
         </div>

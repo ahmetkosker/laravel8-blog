@@ -10,6 +10,8 @@ $setting = \App\Http\Controllers\HomeController::getSetting()
 
 @section('main')
 
+
+
 <div class="page-heading">
     <div class="container">
         <div class="heading-content">
@@ -27,7 +29,7 @@ $setting = \App\Http\Controllers\HomeController::getSetting()
                     <img src="img/service_2.png" alt="">
                 </div>
                 <div class="text">
-                    <p>{!! $setting->contact !!}</p>
+                    @if(isset($setting->contact))<p>{!! $setting->contact !!}</p>@endif
                 </div>
             </div>
         </div>

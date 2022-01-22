@@ -21,7 +21,7 @@ class AdminAuthControl
         if ($request->session()->has('user_id')) {
             return $next($request);
         } else {
-            return redirect()->to('/admin/login');
+            return redirect()->to('/login');
         }
     }
 }

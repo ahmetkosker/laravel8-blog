@@ -6,19 +6,8 @@
 
 @section('main')
 
-
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div id="aside" class="col-md-2">
-
-            </div>
-
-            <div id="main" class="col-md-10">
-                @include('profile.show')
-            </div>
-        </div>
-    </div>
+<div id="main" style="margin-top:5%;">
+    @include('profile.show')
 </div>
 
 @endsection
