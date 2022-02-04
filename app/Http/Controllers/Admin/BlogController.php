@@ -19,9 +19,8 @@ class BlogController extends Controller
      */
     public function index(Request $request, Blog $blogs)
     {
-        $user = $request->session()->get('user_id');
         $blogs = Blog::all();
-        return view('admin.blogs', ['user' => $user, 'data' => $blogs]);
+        return view('admin.blogs', ['data' => $blogs]);
     }
 
     /**
@@ -137,7 +136,6 @@ class BlogController extends Controller
             ->update([
                 'category_id' => $category_id,
                 'title' => $title,
-                'user_id' => Auth::user()->id,
                 'keywords' => $keywords,
                 'description' => $description,
                 'slug' => $slug,

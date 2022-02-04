@@ -163,7 +163,6 @@ $parentCategory = \App\Http\Controllers\HomeController::categoryList();
                         </li>
                         @endauth
                     </ul>
-                    <p>We create awesome templates for you.</p>
                 </div>
             </div>
         </div>

@@ -54,7 +54,7 @@ class UserController extends Controller
                 'user_id' => $user_id,
                 'image' => Storage::putfile('images', $request->file('image'))
             ]);
-            return redirect()->route('user showing blog', ['user_id' => $user_id]);
+            return redirect()->route('user showing blog', ['user_id' => $user_id])->with('success', 'Blog Added');
         } else {
             return redirect()->route('home');
         }
@@ -129,8 +129,10 @@ class UserController extends Controller
                     'keywords' => $keywords,
                     'description' => $description,
                     'slug' => $slug,
+                    'status' => 'false',
                     'image' => $image
                 ]);
+            return redirect()->route('user showing blog', ['user_id' => $user_id])->with('success', 'Blog Updated');
             return redirect()->route('user showing blog', ['user_id', Auth::user()->id]);
         } else {
             return redirect()->route('home');

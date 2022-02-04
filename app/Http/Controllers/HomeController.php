@@ -28,7 +28,7 @@ class HomeController extends Controller
     public static function mainPage(Request $request)
     {
         $setting = DB::table('settings')->first();
-        $blogs = DB::select('select * from blogs where status = ?', ['true']);
+        $blogs = DB::select('select * from blogs where status = ? limit 6', ['true']);
         return view('home.main_page', ['setting' => $setting, 'blogs' => $blogs]);
     }
 
@@ -73,17 +73,17 @@ class HomeController extends Controller
             $comment = DB::table('comments')->where('id', $id)->update([
                 'comment' => $request->input('comment'),
             ]);
-            return redirect()->route('home');
+            return redirect()->route('mycomments', ['user_id' => $user_id])->with('success', 'Comment updated');
         } else {
             return redirect()->route('home');
         }
     }
 
-    public static function mycomments_delete($id)
+    public static function mycomments_delete($user_id, $id)
     {
-        if (Auth::user()->id == $id) {
-            $comments = Comment::find($id);
-            return view('home.mycomments', ['data' => $comments]);
+        if (Auth::user()->id == $user_id) {
+            DB::table('comments')->where('id', $id)->delete();
+            return redirect()->route('mycomments', ['user_id' => $user_id])->with('success', 'Comment deleted');
         } else {
             return redirect()->route('home');
         }

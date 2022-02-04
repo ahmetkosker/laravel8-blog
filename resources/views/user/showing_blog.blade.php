@@ -8,8 +8,13 @@
 
 <div style="margin-top: 9%; background-color:white;" class="card-body">
     <div class="card">
-        <h5 class="card-header">Blogs</h5>
+        <b><h2 class="card-header">Your Blogs</h2></b>
         <a href="{{ route('user creating blog', ['user_id' => $user->id]) }}" class='btn btn-primary' style='color:aliceblue;'>Add a new blog</a>
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered first">

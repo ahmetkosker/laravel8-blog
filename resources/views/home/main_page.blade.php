@@ -10,7 +10,7 @@
     <div class="video-overlay"></div>
     <div class="video-content" style="background: rgb(0,36,19); background: linear-gradient(90deg, rgba(0,36,19,1) 39%, rgba(0,0,0,1) 98%, rgba(9,121,107,0) 100%);">
         <div class="inner">
-            <h1>Welcome to <em>@if(isset($setting->title)) {{ $setting->title }}@endif
+            <h1>@if(isset($setting->title)) {{ $setting->title }}@endif
                 </em></h1>
             <div class="scroll-icon">
                 <a class="scrollTo" data-scrollTo="portfolio" href="#"><img src="blog/img/scroll-icon.png" alt=""></a>
@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <h1 style="color: white; text-align:center; background: rgb(0,0,0);
 background: radial-gradient(circle, rgba(0,0,0,1) 77%, rgba(0,0,199,1) 97%, rgba(238,174,202,1) 100%); padding: 25px;">Random Blogs</h1>
-    @if($blogs)
+        @if($blogs)
         @foreach($blogs as $blog)
         <div class="col-md-4 col-sm-6">
             <div class="portfolio-item">
@@ -32,7 +32,7 @@ background: radial-gradient(circle, rgba(0,0,0,1) 77%, rgba(0,0,199,1) 97%, rgba
                     <div class="thumb">
                         <div class="hover-effect">
                             <div class="hover-content">
-                                <h1>{{ $blog->title }}</h1>
+                                <h1 style="color:black;"><b>{{ $blog->title }}</b></h1>
                                 <p>Contuinue Reading</p>
                             </div>
                         </div>
@@ -44,9 +44,9 @@ background: radial-gradient(circle, rgba(0,0,0,1) 77%, rgba(0,0,199,1) 97%, rgba
             </div>
         </div>
         @endforeach
-    @else
-    <h1 style="text-align:center;" class='alert alert-warning'>There are no blogs yet</h1>
-    @endif
+        @else
+        <h1 style="text-align:center;" class='alert alert-warning'>There are no blogs yet</h1>
+        @endif
     </div>
 </div>
 

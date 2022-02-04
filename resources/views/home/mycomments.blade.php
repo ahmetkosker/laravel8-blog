@@ -9,6 +9,12 @@
 <div style="margin-top: 9%; background-color:white;" class="card-body">
     <div class="table-responsive">
         <table class="table table-striped table-bordered first">
+            <h1>My Comments</h1>
+            @if(session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+            @endif
             @if(isset($data))
             <thead>
                 <tr>

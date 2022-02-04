@@ -83,7 +83,7 @@ class MessageController extends Controller
             ->update([
                 'note' => $request->input('note'),
             ]);
-
+        return redirect()->route('admin_message')->with('message', 'Message was read');
     }
 
     /**

@@ -43,7 +43,7 @@
                                 <tbody>
                                     <tr>
                                         <td style=' text-align:center;'>{{ $blog->id }}</td>
-                                        <td style=' text-align:center;'>{{ $blog->user_id }}</td>
+                                        <td style=' text-align:center;'>{{ $blog->user->name }}</td>
                                         <td style=' text-align:center;'>{{ $blog->category->title }}</td>
                                         <td style=' text-align:center;'>{{ $blog->title }}</td>
                                         <td style=' text-align:center;'>{{ $blog->status }}</td>
